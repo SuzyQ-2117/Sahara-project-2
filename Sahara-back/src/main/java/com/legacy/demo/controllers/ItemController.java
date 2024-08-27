@@ -27,15 +27,18 @@ public class ItemController {
     public ResponseEntity<?> addItem(@RequestBody Item item){
         return this.service.addItem(item);
     }
+
     @DeleteMapping("/item/remove/{id}")
     public ResponseEntity<?> removeItem(@PathVariable Integer id){
         return this.service.removeItem(id);
     }
+
     @PatchMapping("item/update/{id}")
     public ResponseEntity<?> updateItem(@PathVariable Integer id,
                                         @RequestBody Item ItemUpdate){
         return this.service.ItemUpdate(id, ItemUpdate.getName(), ItemUpdate.getPrice(), ItemUpdate.getQuantity(), ItemUpdate.getImageUrl());
     }
+
     @PostMapping("/items/getByIds")
     public List<ItemDto> getItemsByIds(@RequestBody List<Integer> ids) {
         return this.service.getItemsByIds(ids);
