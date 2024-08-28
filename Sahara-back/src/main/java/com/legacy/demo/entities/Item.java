@@ -1,8 +1,11 @@
 package com.legacy.demo.entities;
-import jakarta.persistence.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Item {

@@ -1,10 +1,8 @@
 package com.legacy.demo.dtos;
 
+import java.util.ArrayList;
 
 import com.legacy.demo.entities.Item;
-import jakarta.persistence.OneToMany;
-
-import java.util.ArrayList;
 
 
 public class ItemDto {
