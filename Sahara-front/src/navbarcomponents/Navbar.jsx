@@ -2,13 +2,28 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../CSS/Navbar.css';
 
+/**
+ * The Navbar component displays the navigation bar for the application.
+ * It includes a site title and a menu that toggles visibility on mouse events.
+ * The menu contains links to various pages in the application such as Home, Shop, Cart, and Admin.
+ * 
+ * This component manages its own state to control the visibility of the navigation menu based on mouse events.
+ * 
+ * @returns {JSX.Element} The rendered Navbar component, including the site title and navigation links.
+ */
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
 
+    /**
+     * Handles mouse enter event to open the navigation menu.
+     */
     const handleMouseEnter = () => {
         setIsOpen(true);
     };
 
+    /**
+     * Handles mouse leave event to close the navigation menu.
+     */
     const handleMouseLeave = () => {
         setIsOpen(false);
     };

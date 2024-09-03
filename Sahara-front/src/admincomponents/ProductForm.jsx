@@ -1,5 +1,13 @@
 import React from 'react';
 
+/**
+ * ProductForm component renders a form for creating or updating a product.
+ * 
+ * This component provides input fields for the product's name, price, quantity,
+ * and image URL, with validation for the price and quantity fields. It also
+ * supports two modes: creation (default) and update mode.
+ *
+ */
 const ProductForm = ({
   formData,
   onChange,
@@ -7,6 +15,12 @@ const ProductForm = ({
   onCancel,
   isUpdateMode = false
 }) => {
+
+  /**
+   * Handles changes to the price input field, allowing only valid currency values.
+   * Updates the form data state with the new price value.
+   * 
+   */
   const handlePriceChange = (e) => {
     let value = e.target.value;
     if (/^\d*\.?\d{0,2}$/.test(value)) {
@@ -14,6 +28,11 @@ const ProductForm = ({
     }
   };
 
+  /**
+   * Handles changes to the quantity input field, allowing only numeric values.
+   * Updates the form data state with the new quantity value.
+   * 
+   */
   const handleQuantityChange = (e) => {
     let value = e.target.value;
     if (/^\d*$/.test(value)) {
@@ -23,6 +42,7 @@ const ProductForm = ({
 
   return (
     <form onSubmit={onSubmit}>
+      {/* Input field for the product name */}
       <div className="form-group">
         <label className="label1">Name:</label>
         <input
@@ -35,6 +55,7 @@ const ProductForm = ({
         />
       </div>
 
+      {/* Input field for the product price with validation */}
       <div className="form-group">
         <label className="label1">Price:</label>
         <input
@@ -49,6 +70,7 @@ const ProductForm = ({
         />
       </div>
 
+      {/* Input field for the product quantity with validation */}
       <div className="form-group">
         <label className="label1">Quantity:</label>
         <input
@@ -61,6 +83,7 @@ const ProductForm = ({
         />
       </div>
 
+      {/* Input field for the product image URL */}
       <div className="form-group">
         <label className="label1">Image URL:</label>
         <input
@@ -73,6 +96,7 @@ const ProductForm = ({
         />
       </div>
 
+      {/* Button group for submitting or cancelling the form */}
       <div className="button-group">
         <button className="add-btn" type="submit">
           {isUpdateMode ? 'Update' : 'Submit'}

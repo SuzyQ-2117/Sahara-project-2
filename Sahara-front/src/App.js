@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navbar from './pages/Navbar';
-import HomePage from './pages/HomePage';
-import CartPage from './pages/CartPage';
-import ShopPage from './pages/ShopPage';
-import Admin from './pages/Admin';
-import { CartProvider } from './components/CartContext'; 
+import Navbar from './navbarcomponents/Navbar';
+import HomePage from './navbarcomponents/HomePage';
+import CartPage from './navbarcomponents/CartPage';
+import ShopPage from './navbarcomponents/ShopPage';
+import Admin from './navbarcomponents/Admin';
+import { CartProvider } from './cartcomponents/CartContext'; 
 
 function App() {
   return (

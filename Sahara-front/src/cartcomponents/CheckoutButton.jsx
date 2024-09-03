@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import CustomAlert from './CustomAlert';
-import { useCart } from './CartContext';
+import CustomAlert from '../genericcomponents/CustomAlert';
+import { useCart } from '../cartcomponents/CartContext';
 
 function CheckoutButton() {
     const { cartItems, newCart, setNewCart, clearCart } = useCart();

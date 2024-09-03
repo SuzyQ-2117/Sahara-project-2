@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
 
+/**
+ * ProductListTable component renders a table of products with options to sort,
+ * update, or delete each product.
+ * 
+ * This component allows sorting by product ID, name, price, and quantity.
+ * It also provides buttons to trigger update or delete actions for each product.
+ * 
+ */
 const ProductListTable = ({ products, onUpdate, onDelete }) => {
-    
+
+    /**
+     * State to manage sorting configuration, including the key to sort by and the sort direction.
+     */
     const [sortConfig, setSortConfig] = useState({ key: 'id', direction: 'descending' });
 
+    /**
+     * Sorts the products array based on the current sort configuration.
+     * Creates a new sorted array without mutating the original products array.
+     * 
+     */
     const sortedProducts = [...products].sort((a, b) => {
         if (a[sortConfig.key] < b[sortConfig.key]) {
             return sortConfig.direction === 'ascending' ? -1 : 1;
@@ -14,6 +30,11 @@ const ProductListTable = ({ products, onUpdate, onDelete }) => {
         return 0;
     });
 
+    /**
+     * Handles the sorting request when a table header is clicked.
+     * Toggles the sort direction if the same header is clicked consecutively.
+     * 
+     */
     const onRequestSort = (key) => {
         let direction = 'ascending';
         if (sortConfig.key === key && sortConfig.direction === 'ascending') {

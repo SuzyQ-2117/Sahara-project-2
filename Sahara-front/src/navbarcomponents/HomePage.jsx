@@ -2,6 +2,12 @@ import homeImage from '../homeImage.png';
 import { Link } from 'react-router-dom';
 import '../CSS/HomePage.css';
 
+/**
+ * The HomePage component renders the main content of the home page.
+ * It includes a feature panel with a title, description, and a link to the shop page,
+ * as well as a banner image.
+ * 
+ */
 const HomePage = () => {
     return (
         <main className='home-body'>
@@ -15,6 +21,6 @@ const HomePage = () => {
             <img className='home-image' src={homeImage} alt="Home banner" />
         </main>
     );
-}
+};
 
 export default HomePage;
