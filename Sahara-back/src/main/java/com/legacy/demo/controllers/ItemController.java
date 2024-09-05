@@ -93,5 +93,4 @@ public class ItemController {
     public ResponseEntity<?> removeItem(@PathVariable Integer id) {
         return this.service.removeItem(id);
     }
-
 }
