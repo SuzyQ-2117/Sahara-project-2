@@ -2,6 +2,7 @@ import React from 'react';
 import useFetchItems from '../admincomponents/FetchItems';
 import ItemList from '../shopcomponents/ItemList';
 import '../CSS/ShopPage.css';
+import FilterSearchSortBar from '../shopcomponents/FilterSearchSortBar';
 
 /**
  * The ShopPage component displays a list of items available for purchase.
@@ -16,6 +17,7 @@ const ShopPage = () => {
 
   return (
     <div className="body">
+      <FilterSearchSortBar />
       {Array.isArray(items) && <ItemList items={items} />}
     </div>
   );
