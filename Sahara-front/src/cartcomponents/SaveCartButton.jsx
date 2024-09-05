@@ -15,7 +15,8 @@ import { useCart } from '../cartcomponents/CartContext';
  * including retrieving the current cart items and clearing the cart.
  */
 function SaveCartButton() {
-    const { cartItems, newCart, setNewCart, clearCart } = useCart();
+    const { cartItems, setNewCart, clearCart } = useCart();
+
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState('');
 

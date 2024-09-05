@@ -32,20 +32,20 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-content">
                 <h1 className="site-title">Sahara Stationery</h1>
-                <div 
+                <button 
                     className="menu-toggle"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
+                    
                 >
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span>Menu</span>
-                </div>
+                </button>
                 <ul 
                     className={`nav ${isOpen ? 'active' : ''}`}
-                    onMouseEnter={handleMouseEnter}
-                    onMouseLeave={handleMouseLeave}
+                  
                 >
                     <li className="nav-item">
                         <Link to="/">Home</Link>

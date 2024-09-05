@@ -14,7 +14,7 @@ import CartTable from '../cartcomponents/CartTable';
  * 
  */
 const CartPage = () => {
-    const { cartItems, updateQuantity, removeFromCart, setCartItems } = useCart(); // Access setCartItems from context
+    const { cartItems, updateQuantity, removeFromCart } = useCart(); // Access setCartItems from context
     const { items } = useFetchItems();
     const [itemMap, setItemMap] = useState({});
 
