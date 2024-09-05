@@ -5,6 +5,8 @@ import com.legacy.demo.entities.Item;
 import com.legacy.demo.dtos.ItemDto;
 
 import jakarta.persistence.EntityNotFoundException;
+
+import org.apache.logging.log4j.util.PropertySource.Comparator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Comparator;
 
 @Service
 
@@ -30,15 +33,85 @@ public class ItemService {
         return new ResponseEntity<>(new ItemDto(created), HttpStatus.CREATED);
     }
 
+
+
     //READ
-    public List<ItemDto> getAll() {
-        List<ItemDto> dtos = new ArrayList<>();
-        List<Item> found = this.repo.findAll();
-        for (Item Item : found) {
-            dtos.add(new ItemDto(Item));
+    public List<Item> getAllItems(List<String> sortParams) {
+        List<Item> items = this.repo.findAll();
+    
+        if (sortParams != null && !sortParams.isEmpty()) {
+            Comparator<Item> comparator = createComparator(sortParams); 
+            items.sort(comparator);
         }
-        return dtos;
+    
+        return items;
     }
+
+    public class ItemService {
+
+    // Method to get all items with optional sorting
+    public List<Item> getAllItems(List<String> sortParams) {
+        // Get all items from repository
+        List<Item> items = itemRepository.findAll();
+
+        // If sort parameters are provided, apply sorting logic
+        if (sortParams != null && !sortParams.isEmpty()) {
+            Comparator<Item> comparator = createComparator(sortParams);  // Create dynamic comparator
+            items.sort(comparator);  // Sort the items based on the comparator
+        }
+
+        return items;
+    }
+
+    // Create comparator dynamically based on the provided sorting fields and direction
+    private Comparator<Item> createComparator(List<String> sortParams) {
+        Comparator<Item> comparator = null;
+
+        for (String param : sortParams) {
+            String[] sortCriteria = param.split(",");
+            String field = sortCriteria[0];  // Field to sort by (e.g., "name" or "price")
+            String direction = sortCriteria.length > 1 ? sortCriteria[1] : "asc";  // Sort direction
+
+            Comparator<Item> fieldComparator = getFieldComparator(field, direction);
+
+            if (comparator == null) {
+                comparator = fieldComparator;  // Initialize comparator
+            } else {
+                comparator = comparator.thenComparing(fieldComparator);  // Chain comparators
+            }
+        }
+
+        return comparator;
+    }
+
+    private Comparator<Item> getFieldComparator(String field, String direction) {
+        Comparator<Item> comparator;
+
+        // Handle sorting based on field
+        switch (field) {
+            case "name":
+                comparator = Comparator.comparing(Item::getName);
+                break;
+            case "price":
+                comparator = Comparator.comparing(Item::getPrice);
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid sort field: " + field);
+        }
+
+        return "desc".equalsIgnoreCase(direction) ? comparator.reversed() : comparator;
+    }
+}
+
+
+    // public List<ItemDto> getAll() {
+    //     List<ItemDto> dtos = new ArrayList<>();
+    //     List<Item> found = this.repo.findAll();
+    //     for (Item Item : found) {
+    //         dtos.add(new ItemDto(Item));
+    //     }
+    //     return dtos;
+    // }
 
     public ResponseEntity<?> getItem(Integer id) {
         Optional<Item> found = this.repo.findById(id);
@@ -56,6 +129,8 @@ public class ItemService {
         }
         return dtos;
     }
+
+
 
     //UPDATE
     public ResponseEntity<?> ItemUpdate(Integer id,
