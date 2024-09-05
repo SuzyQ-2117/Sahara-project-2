@@ -43,7 +43,8 @@ public class ItemController {
                 filterDto.getMinPrice(),
                 filterDto.getMaxPrice(),
                 filterDto.getCategory(),
-                filterDto.getInStock());
+                filterDto.getInStock(),
+                filterDto.getSearchTerm());
     }
 
     @GetMapping("/items/get/{id}")

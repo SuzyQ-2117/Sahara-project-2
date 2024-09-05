@@ -8,6 +8,7 @@ public class ItemFilterDto {
     private Double maxPrice; // Maximum price filter
     private String category; // Category filter
     private Boolean inStock; // Stock filter (true for in stock)
+    private String searchTerm; 
 
     // Getters and setters
     public List<String> getSort() {
@@ -48,5 +49,13 @@ public class ItemFilterDto {
 
     public void setInStock(Boolean inStock) {
         this.inStock = inStock;
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm) {
+        this.searchTerm = searchTerm;
     }
 }

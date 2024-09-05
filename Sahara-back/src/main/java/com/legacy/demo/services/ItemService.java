@@ -33,7 +33,7 @@ public class ItemService {
     }
 
     // READ
-    public List<Item> getAllFiltered(List<String> sort, Double minPrice, Double maxPrice, String category, Boolean inStock) {
+    public List<Item> getAllFiltered(List<String> sort, Double minPrice, Double maxPrice, String category, Boolean inStock, String searchTerm) {
         List<Item> items = this.repo.findAll();
     
         // Apply filtering logic
@@ -58,6 +58,13 @@ public class ItemService {
         if (inStock != null && inStock) {
             items = items.stream()
                     .filter(item -> item.getQuantity() > 0)
+                    .collect(Collectors.toList());
+        }
+
+        if (searchTerm != null && !searchTerm.isEmpty()) {
+            items = items.stream()
+                    .filter(item -> item.getTags() != null && item.getTags().stream()
+                            .anyMatch(tag -> tag.equalsIgnoreCase(searchTerm)))  // Search in tags
                     .collect(Collectors.toList());
         }
     
