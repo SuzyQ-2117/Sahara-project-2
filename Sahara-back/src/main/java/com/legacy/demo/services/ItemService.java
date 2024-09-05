@@ -1,23 +1,21 @@
 package com.legacy.demo.services;
 
-import com.legacy.demo.repos.ItemRepo;
-import com.legacy.demo.entities.Item;
-import com.legacy.demo.dtos.ItemDto;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
-import jakarta.persistence.EntityNotFoundException;
-
-import org.apache.logging.log4j.util.PropertySource.Comparator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Comparator;
+import com.legacy.demo.dtos.ItemDto;
+import com.legacy.demo.entities.Item;
+import com.legacy.demo.repos.ItemRepo;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
-
 public class ItemService {
 
     private final ItemRepo repo;
@@ -26,92 +24,81 @@ public class ItemService {
         this.repo = repo;
     }
 
-    //CREATE
+    // CREATE
     public ResponseEntity<ItemDto> addItem(Item newItem) {
         Item created = this.repo.save(newItem);
 
         return new ResponseEntity<>(new ItemDto(created), HttpStatus.CREATED);
     }
 
+    // READ
+    // Method to get all items with optional dynamic multi-field sorting
+    public List<Item> getAll(List<String> sort) {
+        System.out.println("Received sort params: " + sort);
 
-
-    //READ
-    public List<Item> getAllItems(List<String> sortParams) {
         List<Item> items = this.repo.findAll();
-    
-        if (sortParams != null && !sortParams.isEmpty()) {
-            Comparator<Item> comparator = createComparator(sortParams); 
-            items.sort(comparator);
-        }
-    
-        return items;
-    }
 
-    public class ItemService {
+        if (sort != null && !sort.isEmpty()) {
+            Comparator<Item> comparator = null;
 
-    // Method to get all items with optional sorting
-    public List<Item> getAllItems(List<String> sortParams) {
-        // Get all items from repository
-        List<Item> items = itemRepository.findAll();
+            // Loop through each sorting parameter (field,direction)
+            for (String param : sort) {
+                String[] sortCriteria = param.split(",");
+                if (sortCriteria.length != 2) {
+                    throw new IllegalArgumentException("Invalid sort parameter format: " + param);
+                }
 
-        // If sort parameters are provided, apply sorting logic
-        if (sortParams != null && !sortParams.isEmpty()) {
-            Comparator<Item> comparator = createComparator(sortParams);  // Create dynamic comparator
-            items.sort(comparator);  // Sort the items based on the comparator
-        }
+                String field = sortCriteria[0];
+                String direction = sortCriteria[1];
 
-        return items;
-    }
+                // If 'none' is passed as the direction, skip sorting for this field
+                if ("none".equalsIgnoreCase(direction)) {
+                    continue; // Skip this field and move to the next one
+                }
 
-    // Create comparator dynamically based on the provided sorting fields and direction
-    private Comparator<Item> createComparator(List<String> sortParams) {
-        Comparator<Item> comparator = null;
+                // Get the comparator for the specific field and direction
+                Comparator<Item> fieldComparator = getFieldComparator(field, direction);
 
-        for (String param : sortParams) {
-            String[] sortCriteria = param.split(",");
-            String field = sortCriteria[0];  // Field to sort by (e.g., "name" or "price")
-            String direction = sortCriteria.length > 1 ? sortCriteria[1] : "asc";  // Sort direction
+                // Dynamically chain comparators for multi-field sorting
+                if (comparator == null) {
+                    // Initialize comparator if it's the first one
+                    comparator = fieldComparator;
+                } else {
+                    // Chain comparators if more than one sort field
+                    comparator = comparator.thenComparing(fieldComparator);
+                }
+            }
 
-            Comparator<Item> fieldComparator = getFieldComparator(field, direction);
-
-            if (comparator == null) {
-                comparator = fieldComparator;  // Initialize comparator
-            } else {
-                comparator = comparator.thenComparing(fieldComparator);  // Chain comparators
+            // Apply sorting based on the dynamically built comparator
+            if (comparator != null) {
+                items.sort(comparator);
             }
         }
 
-        return comparator;
+        return items;
     }
 
+    // Comparator builder method for specific fields and sort directions
     private Comparator<Item> getFieldComparator(String field, String direction) {
         Comparator<Item> comparator;
 
-        // Handle sorting based on field
-        switch (field) {
+        switch (field.toLowerCase()) {
             case "name":
                 comparator = Comparator.comparing(Item::getName);
                 break;
             case "price":
                 comparator = Comparator.comparing(Item::getPrice);
                 break;
+            case "quantity":
+                comparator = Comparator.comparing(Item::getQuantity);
+                break;
             default:
                 throw new IllegalArgumentException("Invalid sort field: " + field);
         }
 
+        // Reverse comparator if direction is descending
         return "desc".equalsIgnoreCase(direction) ? comparator.reversed() : comparator;
     }
-}
-
-
-    // public List<ItemDto> getAll() {
-    //     List<ItemDto> dtos = new ArrayList<>();
-    //     List<Item> found = this.repo.findAll();
-    //     for (Item Item : found) {
-    //         dtos.add(new ItemDto(Item));
-    //     }
-    //     return dtos;
-    // }
 
     public ResponseEntity<?> getItem(Integer id) {
         Optional<Item> found = this.repo.findById(id);
@@ -130,17 +117,15 @@ public class ItemService {
         return dtos;
     }
 
-
-
-    //UPDATE
+    // UPDATE
     public ResponseEntity<?> ItemUpdate(Integer id,
-                                        String name,
-                                        Double price,
-                                        Integer quantity,
-                                        String imageUrl,
-                                        String color,
-                                        String category,
-                                        Boolean stockAvailable){
+            String name,
+            Double price,
+            Integer quantity,
+            String imageUrl,
+            String color,
+            String category,
+            Boolean stockAvailable) {
 
         Optional<Item> found = this.repo.findById(Math.toIntExact(id));
         if (found.isEmpty()) {
@@ -149,19 +134,26 @@ public class ItemService {
 
         Item toUpdate = found.get();
 
-        if (name != null) toUpdate.setName(name);
-        if (price != null) toUpdate.setPrice(price);
-        if (quantity != null) toUpdate.setQuantity(quantity);
-        if (imageUrl != null) toUpdate.setImageUrl(imageUrl);
-        if (color != null) toUpdate.setColor(color);
-        if (category != null) toUpdate.setCategory(category);
-        if (stockAvailable != null) toUpdate.setStockAvailable(stockAvailable);
+        if (name != null)
+            toUpdate.setName(name);
+        if (price != null)
+            toUpdate.setPrice(price);
+        if (quantity != null)
+            toUpdate.setQuantity(quantity);
+        if (imageUrl != null)
+            toUpdate.setImageUrl(imageUrl);
+        if (color != null)
+            toUpdate.setColor(color);
+        if (category != null)
+            toUpdate.setCategory(category);
+        if (stockAvailable != null)
+            toUpdate.setStockAvailable(stockAvailable);
 
         Item updated = this.repo.save(toUpdate);
         return ResponseEntity.ok(new ItemDto(updated));
     }
 
-    //UPDATE - add tag(s) to item
+    // UPDATE - add tag(s) to item
     public Item addTags(Integer id, List<String> tagsToAdd) {
         Optional<Item> found = this.repo.findById(id);
         if (found.isPresent()) {
@@ -180,8 +172,7 @@ public class ItemService {
         }
     }
 
-
-    //UPDATE - remove tag(s) from item
+    // UPDATE - remove tag(s) from item
     public Item removeTags(Integer id, List<String> tagsToRemove) {
         Optional<Item> found = this.repo.findById(id);
         if (found.isPresent()) {
@@ -196,9 +187,7 @@ public class ItemService {
         }
     }
 
-
-
-    //DELETE
+    // DELETE
     public ResponseEntity<?> removeItem(Integer id) {
         Optional<Item> found = this.repo.findById(id);
         if (found.isEmpty()) {
