@@ -3,10 +3,10 @@ import React from 'react';
 /**
  * ProductForm component renders a form for creating or updating a product.
  * 
- * This component provides input fields for the product's name, price, quantity,
- * and image URL, with validation for the price and quantity fields. It also
- * supports two modes: creation (default) and update mode.
- *
+ * This component provides input fields for the product's name, price, quantity, 
+ * and image URL. It includes validation for price and quantity fields, and 
+ * supports both creation and update modes.
+ * 
  */
 const ProductForm = ({
   formData,
@@ -15,7 +15,6 @@ const ProductForm = ({
   onCancel,
   isUpdateMode = false
 }) => {
-
   /**
    * Handles changes to the price input field, allowing only valid currency values.
    * Updates the form data state with the new price value.
@@ -96,7 +95,7 @@ const ProductForm = ({
         />
       </div>
 
-      {/* Button group for submitting or cancelling the form */}
+      {/* Button group for submitting or canceling the form */}
       <div className="button-group">
         <button className="add-btn" type="submit">
           {isUpdateMode ? 'Update' : 'Submit'}

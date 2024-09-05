@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useMemo } from "react";
+import PropTypes from 'prop-types'; // Import PropTypes
+
 
 // Create a context for managing the shopping cart state
 const CartContext = createContext();
@@ -59,22 +61,27 @@ export const CartProvider = ({ children }) => {
     setNewCart(null);
   };
 
+  // Memoize the context value to avoid unnecessary re-renders
+  const value = useMemo(() => ({
+    cartItems,
+    addToCart,
+    updateQuantity,
+    removeFromCart,
+    clearCart,
+    newCart,
+    setNewCart,
+    setCartItems,
+  }), [cartItems, newCart]); // Dependencies array includes cartItems and newCart
+
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        updateQuantity,
-        removeFromCart,
-        clearCart,
-        newCart,
-        setNewCart,
-        setCartItems,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
+};
+// Define prop types for validation
+CartProvider.propTypes = {
+  children: PropTypes.node.isRequired, // `children` should be a required node
 };
 
 /**

@@ -1,8 +1,8 @@
-// import React, { useState } from "react";
 import SaveCartButton from "./SaveCartButton";
 import CheckoutButton from "./CheckoutButton";
 import RetrieveCart from "./RetrieveCart";
 import "../CSS/CartActions.css";
+import PropTypes from 'prop-types';
 
 /**
  * CartActions component provides a set of actions related to the shopping cart,
@@ -29,6 +29,11 @@ const CartActions = ({ onRetrieve }) => {
       </div>
     </>
   );
+};
+
+// Define prop types for validation
+CartActions.propTypes = {
+  onRetrieve: PropTypes.func.isRequired,  // `onAddProduct` should be a required function
 };
 
 export default CartActions;

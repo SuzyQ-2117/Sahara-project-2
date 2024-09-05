@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from 'prop-types';
 import axios from "axios";
 import CustomAlert from "../genericcomponents/CustomAlert";
 import Modal from "react-modal";
@@ -144,6 +145,11 @@ const AddProduct = ({ onAddProduct }) => {
       {showAlert && <CustomAlert message={alertMessage} onClose={closeAlert} />}
     </div>
   );
+};
+
+// Define prop types for validation
+AddProduct.propTypes = {
+  onAddProduct: PropTypes.func.isRequired,  // `onAddProduct` should be a required function
 };
 
 export default AddProduct;

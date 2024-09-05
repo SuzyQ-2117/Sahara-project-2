@@ -1,4 +1,6 @@
 import '../CSS/CustomAlert.css';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * Displays a custom alert message with a close button.
@@ -23,6 +25,12 @@ const CustomAlert = ({ message, onClose }) => {
             </button>
         </div>
     );
+};
+
+// Define prop types for validation
+CustomAlert.propTypes = {
+    message: PropTypes.string.isRequired,  // `message` should be a required string
+    onClose: PropTypes.func.isRequired    // `onClose` should be a required function
 };
 
 export default CustomAlert;
