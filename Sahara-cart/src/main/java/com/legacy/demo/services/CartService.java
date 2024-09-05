@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.SecureRandom;
 import java.util.*;
 
 @Service
@@ -17,9 +18,8 @@ public class CartService {
     @Autowired
     private CartRepository cartRepository;
 
-    private static final int ID_LENGTH = 6;
     private static final Set<String> generatedIds = new HashSet<>(); // Track generated IDs to ensure uniqueness
-    private static final Random random = new Random();
+    private static final SecureRandom random = new SecureRandom();
 
 
     @Transactional

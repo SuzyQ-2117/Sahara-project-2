@@ -1,0 +1,6 @@
+projectKey=Sahara-cart
+serverUrl=http://localhost:9000
+serverVersion=10.6.0.92116
+dashboardUrl=http://localhost:9000/dashboard?id=Sahara-cart
+ceTaskId=960350e3-78a5-44b8-a110-c552ed2bb4c8
+ceTaskUrl=http://localhost:9000/api/ce/task?id=960350e3-78a5-44b8-a110-c552ed2bb4c8
