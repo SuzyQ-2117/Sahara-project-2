@@ -33,8 +33,8 @@ public class ItemController {
     }
     @PatchMapping("item/update/{id}")
     public ResponseEntity<?> updateItem(@PathVariable Integer id,
-                                        @RequestBody Item ItemUpdate){
-        return this.service.ItemUpdate(id, ItemUpdate.getName(), ItemUpdate.getPrice(), ItemUpdate.getQuantity(), ItemUpdate.getImageUrl());
+                                        @RequestBody Item itemUpdate){
+        return this.service.itemUpdate(id, itemUpdate.getName(), itemUpdate.getPrice(), itemUpdate.getQuantity(), itemUpdate.getImageUrl());
     }
     @PostMapping("/items/getByIds")
     public List<ItemDto> getItemsByIds(@RequestBody List<Integer> ids) {

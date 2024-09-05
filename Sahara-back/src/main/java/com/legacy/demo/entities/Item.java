@@ -24,17 +24,6 @@ public class Item {
         this.imageUrl = imageUrl;
     }
 
-    public Item(String name, Double price, String imageUrl) {
-        super();
-        this.name = name;
-        this.price = price;
-        this.imageUrl = imageUrl;
-    }
-
-    public Item(Integer id) {
-        super();
-        this.id = id;
-    }
 
     public Integer getId() {
         return id;

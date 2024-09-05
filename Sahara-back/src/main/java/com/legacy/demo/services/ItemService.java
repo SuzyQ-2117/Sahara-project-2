@@ -55,7 +55,7 @@ public class ItemService {
 
     }
 
-    public ResponseEntity<?> ItemUpdate(Integer id,
+    public ResponseEntity<?> itemUpdate(Integer id,
                                             String name,
                                             Double price,
                                             Integer quantity,
