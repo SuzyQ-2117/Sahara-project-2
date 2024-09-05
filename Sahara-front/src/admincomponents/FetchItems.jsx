@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8082/items/getAll';
+const API_URL = 'http://localhost:8082/items/filter';
 
 /**
  * Custom React hook to fetch a list of items from an API.
@@ -28,8 +28,11 @@ const useFetchItems = () => {
      */
     const fetchItems = useCallback(async () => {
         try {
+            const requestBody = {
+                sort: ["name,none", "price,none"]
+            };
             // Perform the GET request to fetch items
-            const response = await axios.get(API_URL);
+            const response = await axios.post(API_URL, requestBody);
 
             // Log the fetched data to the console for debugging purposes
             console.log('Data fetched from API:', response.data);
