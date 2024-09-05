@@ -1,7 +1,6 @@
 package com.legacy.demo.controllers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,10 +10,10 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.legacy.demo.dtos.ItemDto;
+import com.legacy.demo.dtos.ItemFilterDto;
 import com.legacy.demo.entities.Item;
 import com.legacy.demo.services.ItemService;
 
@@ -35,14 +34,16 @@ public class ItemController {
     }
 
     // READ
-    @GetMapping("/items/getAll")
-    public List<ItemDto> getAll(
-        @RequestParam(value = "sort", required = false) List<String> sortParams) {
-
-            List<Item> items = this.service.getAll(sortParams);
-            return items.stream()
-                .map(ItemDto::new)
-                .collect(Collectors.toList());
+    // POST as need to send sort, search and filter as part of the request body to
+    // avoid capping out max URL length
+    @PostMapping("/items/filter")
+    public List<Item> getAllItems(@RequestBody ItemFilterDto filterDto) {
+        return service.getAllFiltered(
+                filterDto.getSort(),
+                filterDto.getMinPrice(),
+                filterDto.getMaxPrice(),
+                filterDto.getCategory(),
+                filterDto.getInStock());
     }
 
     @GetMapping("/items/get/{id}")
@@ -59,9 +60,14 @@ public class ItemController {
     @PatchMapping("item/update/{id}")
     public ResponseEntity<?> updateItem(@PathVariable Integer id,
             @RequestBody Item ItemUpdate) {
-        return this.service.ItemUpdate(id, ItemUpdate.getName(), ItemUpdate.getPrice(), ItemUpdate.getQuantity(),
-                ItemUpdate.getImageUrl(), ItemUpdate.getColor(), ItemUpdate.getCategory(),
-                ItemUpdate.getStockAvailable());
+        return this.service.ItemUpdate(
+                id, 
+                ItemUpdate.getName(), 
+                ItemUpdate.getPrice(), 
+                ItemUpdate.getQuantity(),
+                ItemUpdate.getImageUrl(), 
+                ItemUpdate.getColor(), 
+                ItemUpdate.getCategory());
     }
 
     // UPDATE - add tag

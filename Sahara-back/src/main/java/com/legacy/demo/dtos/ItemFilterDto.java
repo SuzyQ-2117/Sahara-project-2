@@ -3,11 +3,11 @@ package com.legacy.demo.dtos;
 import java.util.List;
 
 public class ItemFilterDto {
-    private List<String> sort;        // List of sort params
-    private Double minPrice;          // Minimum price filter
-    private Double maxPrice;          // Maximum price filter
-    private String category;          // Category filter
-    private Boolean inStock;          // Stock filter (true for in stock)
+    private List<String> sort; // List of sort params
+    private Double minPrice; // Minimum price filter
+    private Double maxPrice; // Maximum price filter
+    private String category; // Category filter
+    private Boolean inStock; // Stock filter (true for in stock)
 
     // Getters and setters
     public List<String> getSort() {

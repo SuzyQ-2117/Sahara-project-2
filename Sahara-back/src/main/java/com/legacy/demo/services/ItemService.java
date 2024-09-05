@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,53 +33,71 @@ public class ItemService {
     }
 
     // READ
-    // Method to get all items with optional dynamic multi-field sorting
-    public List<Item> getAll(List<String> sort) {
-        System.out.println("Received sort params: " + sort);
-
+    public List<Item> getAllFiltered(List<String> sort, Double minPrice, Double maxPrice, String category, Boolean inStock) {
         List<Item> items = this.repo.findAll();
-
+    
+        // Apply filtering logic
+        if (minPrice != null) {
+            items = items.stream()
+                    .filter(item -> item.getPrice() >= minPrice)
+                    .collect(Collectors.toList());
+        }
+    
+        if (maxPrice != null) {
+            items = items.stream()
+                    .filter(item -> item.getPrice() <= maxPrice)
+                    .collect(Collectors.toList());
+        }
+    
+        if (category != null && !category.isEmpty()) {
+            items = items.stream()
+                    .filter(item -> item.getCategory().equalsIgnoreCase(category))
+                    .collect(Collectors.toList());
+        }
+    
+        if (inStock != null && inStock) {
+            items = items.stream()
+                    .filter(item -> item.getQuantity() > 0)
+                    .collect(Collectors.toList());
+        }
+    
+        // Sorting logic
         if (sort != null && !sort.isEmpty()) {
             Comparator<Item> comparator = null;
-
-            // Loop through each sorting parameter (field,direction)
             for (String param : sort) {
                 String[] sortCriteria = param.split(",");
                 if (sortCriteria.length != 2) {
                     throw new IllegalArgumentException("Invalid sort parameter format: " + param);
                 }
-
+    
                 String field = sortCriteria[0];
                 String direction = sortCriteria[1];
-
-                // If 'none' is passed as the direction, skip sorting for this field
+    
+                // Skip sorting if "none" is passed
                 if ("none".equalsIgnoreCase(direction)) {
-                    continue; // Skip this field and move to the next one
+                    continue; // Skip this sorting field
                 }
-
+    
                 // Get the comparator for the specific field and direction
                 Comparator<Item> fieldComparator = getFieldComparator(field, direction);
-
-                // Dynamically chain comparators for multi-field sorting
+    
                 if (comparator == null) {
-                    // Initialize comparator if it's the first one
                     comparator = fieldComparator;
                 } else {
-                    // Chain comparators if more than one sort field
                     comparator = comparator.thenComparing(fieldComparator);
                 }
             }
-
-            // Apply sorting based on the dynamically built comparator
+    
+            // Apply the comparator if it was built
             if (comparator != null) {
                 items.sort(comparator);
             }
         }
-
+    
         return items;
     }
+    
 
-    // Comparator builder method for specific fields and sort directions
     private Comparator<Item> getFieldComparator(String field, String direction) {
         Comparator<Item> comparator;
 
@@ -124,8 +143,7 @@ public class ItemService {
             Integer quantity,
             String imageUrl,
             String color,
-            String category,
-            Boolean stockAvailable) {
+            String category) {
 
         Optional<Item> found = this.repo.findById(Math.toIntExact(id));
         if (found.isEmpty()) {
@@ -146,8 +164,6 @@ public class ItemService {
             toUpdate.setColor(color);
         if (category != null)
             toUpdate.setCategory(category);
-        if (stockAvailable != null)
-            toUpdate.setStockAvailable(stockAvailable);
 
         Item updated = this.repo.save(toUpdate);
         return ResponseEntity.ok(new ItemDto(updated));

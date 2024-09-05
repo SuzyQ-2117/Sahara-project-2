@@ -14,9 +14,8 @@ public class ItemDto {
     private String color;
     private String category;
     private ArrayList<String> tags;
-    private Boolean stockAvailable;
 
-    public ItemDto(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags, Boolean stockAvailable) {
+    public ItemDto(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -25,7 +24,6 @@ public class ItemDto {
         this.color = color;
         this.category = category;
         this.tags = tags;
-        this.stockAvailable = stockAvailable;
     }
     public ItemDto() {
         super();
@@ -40,7 +38,6 @@ public class ItemDto {
         this.color = item.getColor();
         this.category = item.getCategory();
         this.tags = item.getTags();
-        this.stockAvailable = item.getStockAvailable();
     }
 
     public Integer getId() {
@@ -105,13 +102,5 @@ public class ItemDto {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
-    }
-
-    public Boolean getStockAvailable() {
-        return stockAvailable;
-    }
-
-    public void setStockAvailable(Boolean stockAvailable) {
-        this.stockAvailable = stockAvailable;
     }
 }

@@ -20,12 +20,11 @@ public class Item {
     private String color;
     private String category;
     private ArrayList<String> tags;
-    private Boolean stockAvailable;
 
     public Item(){
     }
 
-    public Item(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags, Boolean stockAvailable) {
+    public Item(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -34,7 +33,6 @@ public class Item {
         this.color = color;
         this.category = category;
         this.tags = tags;
-        this.stockAvailable = stockAvailable;
     }
 
     public Item(String name, Double price, String imageUrl) {
@@ -109,13 +107,5 @@ public class Item {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
-    }
-
-    public Boolean getStockAvailable() {
-        return stockAvailable;
-    }
-
-    public void setStockAvailable(Boolean stockAvailable) {
-        this.stockAvailable = stockAvailable;
     }
 }
