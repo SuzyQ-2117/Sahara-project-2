@@ -47,6 +47,7 @@ public class ItemController {
                 filterDto.getSearchTerm());
     }
 
+
     @GetMapping("/items/get/{id}")
     public ResponseEntity<?> getItem(@PathVariable Integer id) {
         return this.service.getItem(id);

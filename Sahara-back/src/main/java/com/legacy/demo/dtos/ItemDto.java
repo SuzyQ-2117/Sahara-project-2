@@ -16,6 +16,7 @@ public class ItemDto {
     private ArrayList<String> tags;
 
     public ItemDto(Integer id, String name, Double price, Integer quantity, String imageUrl, String color, String category, ArrayList<String> tags) {
+
         this.id = id;
         this.name = name;
         this.price = price;

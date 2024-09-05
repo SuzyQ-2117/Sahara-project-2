@@ -1,14 +1,26 @@
 import React, { useEffect } from 'react';
 import CartItemRow from './CartItemRow';
 import CartSummary from './CartSummary';
-import CartActions from './CartActions';
+import CartActions from '../cartcomponents/CartActions';
 import '../CSS/CartTable.css';
 import { useCart } from './CartContext';
 
+/**
+ * CartTable component displays the cart items in a table format, including a summary
+ * of the cart's financials and actions for managing the cart.
+ * 
+ * The table consists of a header (`<thead>`) that labels each column, a body (`<tbody>`) 
+ * that lists each item in the cart with options to change quantity or remove the item, 
+ * and a footer (`<tfoot>`) that includes the cart summary and actions such as retrieving 
+ * the cart and proceeding to checkout.
+ * 
+ * The `useCart` hook is used to access the current list of cart items.
+ */
 const CartTable = ({ itemMap, handleQuantityChange, handleRemoveItem, total, serviceCharge, onRetrieve }) => {
     const { cartItems } = useCart();
 
     useEffect(() => {
+        // Empty effect, placeholder for future side-effects if needed
     }, [cartItems]); 
 
     return (

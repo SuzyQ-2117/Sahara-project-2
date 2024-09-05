@@ -1,12 +1,18 @@
 import React, { useState, useCallback } from 'react';
-import { useCart } from './CartContext';
+import { useCart } from '../cartcomponents/CartContext';
 import { useNavigate } from 'react-router-dom';
-import CustomAlert from '../components/CustomAlert';
+import CustomAlert from '../genericcomponents/CustomAlert';
 
+/**
+ * The ItemCard component displays details for a single item, including its name, price, image, and available quantity.
+ * It allows users to select a quantity and add the item to their cart, handling scenarios where the desired quantity exceeds availability.
+ * The component also provides feedback via alerts and popups to enhance the user experience.
+ * 
+ */
 const ItemCard = ({ id, name, price, imageUrl, quantity }) => {
     const [inputQuantity, setInputQuantity] = useState(1);
     const { cartItems, addToCart } = useCart();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const [alertMessage, setAlertMessage] = useState('');
     const [showAlert, setShowAlert] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
@@ -24,7 +30,7 @@ const ItemCard = ({ id, name, price, imageUrl, quantity }) => {
             setShowAlert(true);
         } else {
             addToCart({ id, name, price, imageUrl, quantity: inputQuantity });
-            setShowPopup(true);  
+            setShowPopup(true);
         }
     };
 
@@ -37,7 +43,7 @@ const ItemCard = ({ id, name, price, imageUrl, quantity }) => {
     };
 
     const goToCart = () => {
-       navigate('/cart');  
+        navigate('/cart');
     };
 
     return (

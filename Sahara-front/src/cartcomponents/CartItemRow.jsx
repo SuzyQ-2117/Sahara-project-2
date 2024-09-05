@@ -1,6 +1,14 @@
 import React from 'react';
 import '../CSS/CartItemRow.css';
 
+/**
+ * CartItemRow component represents a single row in the cart, displaying details
+ * about the item, such as its name, price, and quantity. It also provides controls
+ * for adjusting the item's quantity and removing the item from the cart.
+ *
+ * This component renders a table row (`<tr>`) with several cells (`<td>`),
+ * each containing different pieces of information or controls related to the item.
+ */
 const CartItemRow = ({ item, itemMap, handleQuantityChange, handleRemoveItem }) => (
     <tr>
         <td>{item.name}</td>

@@ -16,15 +16,15 @@ import com.legacy.demo.classes.CartItemData;
 import com.legacy.demo.entities.Cart;
 import com.legacy.demo.repos.CartRepository;
 
+
 @Service
 public class CartService {
 
     @Autowired
     private CartRepository cartRepository;
 
-    private static final int ID_LENGTH = 6;
     private static final Set<String> generatedIds = new HashSet<>(); // Track generated IDs to ensure uniqueness
-    private static final Random random = new Random();
+    private static final SecureRandom random = new SecureRandom();
 
     @Transactional
     public String createCartWithItems(List<CartItemData> items) {

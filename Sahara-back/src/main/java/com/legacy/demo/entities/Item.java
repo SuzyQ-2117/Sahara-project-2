@@ -35,6 +35,7 @@ public class Item {
         this.tags = tags;
     }
 
+
     public Item(String name, Double price, String imageUrl) {
         this.name = name;
         this.price = price;
@@ -44,6 +45,7 @@ public class Item {
     public Item(Integer id) {
         this.id = id;
     }
+
 
     public Integer getId() {
         return id;

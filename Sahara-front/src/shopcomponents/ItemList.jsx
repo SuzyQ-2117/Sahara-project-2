@@ -1,6 +1,11 @@
 import React from 'react';
-import ItemCard from '../components/ItemCard';
+import ItemCard from '../shopcomponents/ItemCard';
 
+/**
+ * The ItemList component renders a list of ItemCard components based on the provided items array.
+ * It handles cases where the items prop is not an array and displays a message if no items are available.
+ * 
+ */
 const ItemList = ({ items }) => {
     if (!Array.isArray(items)) {
         console.error('Expected items to be an array');
