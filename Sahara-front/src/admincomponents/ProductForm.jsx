@@ -43,7 +43,7 @@ const ProductForm = ({
     <form onSubmit={onSubmit}>
       {/* Input field for the product name */}
       <div className="form-group">
-        <label className="label1">Name:</label>
+        <label className="label1" htmlFor="input1">Name:</label>
         <input
           className="input1"
           type="text"
@@ -56,7 +56,7 @@ const ProductForm = ({
 
       {/* Input field for the product price with validation */}
       <div className="form-group">
-        <label className="label1">Price:</label>
+        <label className="label1" htmlFor="input1">Price:</label>
         <input
           className="input1"
           type="text"
@@ -71,7 +71,7 @@ const ProductForm = ({
 
       {/* Input field for the product quantity with validation */}
       <div className="form-group">
-        <label className="label1">Quantity:</label>
+        <label className="label1" htmlFor="input1">Quantity:</label>
         <input
           className="input1"
           type="text" 
@@ -84,7 +84,7 @@ const ProductForm = ({
 
       {/* Input field for the product image URL */}
       <div className="form-group">
-        <label className="label1">Image URL:</label>
+        <label className="label1" htmlFor="input1">Image URL:</label>
         <input
           className="input1"
           type="text"

@@ -2,5 +2,5 @@ projectKey=Sahara-front
 serverUrl=http://localhost:9000
 serverVersion=10.6.0.92116
 dashboardUrl=http://localhost:9000/dashboard?id=Sahara-front
-ceTaskId=fcfa2318-bcff-4898-8f44-3efb9e1eb682
-ceTaskUrl=http://localhost:9000/api/ce/task?id=fcfa2318-bcff-4898-8f44-3efb9e1eb682
+ceTaskId=4e752acd-bdfe-4fde-ad95-60e2d575137e
+ceTaskUrl=http://localhost:9000/api/ce/task?id=4e752acd-bdfe-4fde-ad95-60e2d575137e
