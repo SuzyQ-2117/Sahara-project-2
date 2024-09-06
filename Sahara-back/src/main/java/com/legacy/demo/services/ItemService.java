@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class ItemService {
 
+    @Autowired
     private final ItemRepo repo;
 
     public ItemService(ItemRepo repo) {
@@ -142,6 +144,12 @@ public class ItemService {
         }
         return dtos;
     }
+
+    // Method to return all distinct categories
+    public List<String> getAllDistinctCategories() {
+        return this.repo.findDistinctCategories();
+    }
+
 
     // UPDATE
     public ResponseEntity<?> ItemUpdate(Integer id,

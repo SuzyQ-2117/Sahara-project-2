@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
+
 import { ItemContext } from './ItemContext';
+import axios from 'axios';
 
 const FilterSearchSortBar = ({ fetchItems }) => {
     const { sortOptions, setSortOptions, filters, setFilters, searchTerm, setSearchTerm } = useContext(ItemContext);
 
     const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+    const [categories, setCategories] = useState([]);
 
     const [showSortControls, setShowSortControls] = useState(false);
     const [showFilterControls, setShowFilterControls] = useState(false);
@@ -33,6 +36,19 @@ const FilterSearchSortBar = ({ fetchItems }) => {
     useEffect(() => {
         fetchItems();
     }, [sortOptions, filters, searchTerm]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:8082/items/get/categories');  // Adjust the URL if needed
+                setCategories(response.data);  // Store categories in state
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            }
+        };
+
+        fetchCategories();
+    }, []);
 
     return (
         <div className="filter-search-sort-bar">
@@ -94,8 +110,11 @@ const FilterSearchSortBar = ({ fetchItems }) => {
                             onChange={e => setFilters(prev => ({ ...prev, category: e.target.value }))}
                         >
                             <option value="all">All Categories</option>
-                            <option value="writing">Writing</option>
-                            <option value="drawing">Drawing</option>
+                            {categories.map((category) => (
+                                <option key={category} value={category}>
+                                    {category}
+                                </option>
+                            ))}
                         </select>
                     </div>
                     <div>

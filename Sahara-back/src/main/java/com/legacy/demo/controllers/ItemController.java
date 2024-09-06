@@ -2,6 +2,7 @@ package com.legacy.demo.controllers;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,11 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.legacy.demo.dtos.ItemDto;
 import com.legacy.demo.dtos.ItemFilterDto;
 import com.legacy.demo.entities.Item;
+import com.legacy.demo.repos.ItemRepo;
 import com.legacy.demo.services.ItemService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ItemController {
+
+    @Autowired
+    private ItemRepo itemRepo;
 
     private ItemService service;
 
@@ -47,7 +52,6 @@ public class ItemController {
                 filterDto.getSearchTerm());
     }
 
-
     @GetMapping("/items/get/{id}")
     public ResponseEntity<?> getItem(@PathVariable Integer id) {
         return this.service.getItem(id);
@@ -58,17 +62,22 @@ public class ItemController {
         return this.service.getItemsByIds(ids);
     }
 
+    @GetMapping("/items/get/categories")
+    public List<String> getAllDistinctCategories() {
+        return itemRepo.findDistinctCategories();
+    }
+
     // UPDATE
     @PatchMapping("item/update/{id}")
     public ResponseEntity<?> updateItem(@PathVariable Integer id,
             @RequestBody Item ItemUpdate) {
         return this.service.ItemUpdate(
-                id, 
-                ItemUpdate.getName(), 
-                ItemUpdate.getPrice(), 
+                id,
+                ItemUpdate.getName(),
+                ItemUpdate.getPrice(),
                 ItemUpdate.getQuantity(),
-                ItemUpdate.getImageUrl(), 
-                ItemUpdate.getColor(), 
+                ItemUpdate.getImageUrl(),
+                ItemUpdate.getColor(),
                 ItemUpdate.getCategory());
     }
 
