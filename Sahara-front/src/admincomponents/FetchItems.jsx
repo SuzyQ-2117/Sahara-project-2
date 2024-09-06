@@ -55,7 +55,7 @@ const useFetchItems = (sortOptions = { name: 'none', price: 'none' }, filters = 
             console.error('Error fetching items:', error);
             setError(error);
         }
-    }, [sortOptions, filters, searchTerm]);
+    });
 
     /**
      * Effect hook to automatically fetch items when the component mounts.
@@ -64,9 +64,7 @@ const useFetchItems = (sortOptions = { name: 'none', price: 'none' }, filters = 
      * or whenever the `fetchItems` function changes (which should be rare
      * due to `useCallback` memoization).
      */
-    useEffect(() => {
-        fetchItems();
-    }, [fetchItems]);
+    
 
     // Return the fetched items, any error that occurred, and the refetch function
     return { items, error, refetch: fetchItems };

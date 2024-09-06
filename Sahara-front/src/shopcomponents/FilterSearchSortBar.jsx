@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { ItemContext } from './ItemContext';
 
 const FilterSearchSortBar = ({ fetchItems }) => {
@@ -29,6 +29,10 @@ const FilterSearchSortBar = ({ fetchItems }) => {
     const handleClearFilters = () => {
         setFilters({ minPrice: '', maxPrice: '', category: 'all', inStock: false });
     }
+
+    useEffect(() => {
+        fetchItems();
+    }, [sortOptions, filters, searchTerm]);
 
     return (
         <div className="filter-search-sort-bar">

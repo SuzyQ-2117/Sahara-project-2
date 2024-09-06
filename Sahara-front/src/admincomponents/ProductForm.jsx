@@ -74,7 +74,7 @@ const ProductForm = ({
         <label className="label1" htmlFor="input1">Quantity:</label>
         <input
           className="input1"
-          type="text" 
+          type="text"
           name="quantity"
           value={formData.quantity}
           onChange={handleQuantityChange}
@@ -92,6 +92,39 @@ const ProductForm = ({
           value={formData.imageUrl}
           onChange={(e) => onChange({ ...formData, imageUrl: e.target.value })}
           required
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="label1" htmlFor="input1">Colour:</label>
+        <input
+        className="input1"
+          type="text"
+          value={formData.color}
+          onChange={(e) => onChange({ ...formData, color: e.target.value })}
+          placeholder="Color"
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="label1" htmlFor="input1">Category:</label>
+        <input
+        className="input1"
+          type="text"
+          value={formData.category}
+          onChange={(e) => onChange({ ...formData, category: e.target.value })}
+          placeholder="Category"
+        />
+      </div>
+
+      <div className="form-group">
+        <label className="label1" htmlFor="input1">Tags:</label>
+        <input
+        className="input1"
+          type="text"
+          value={formData.tags.join(', ')}  // Convert tags array to a string for display
+          onChange={(e) => onChange({ ...formData, tags: e.target.value.split(',').map(tag => tag.trim()) })}
+          placeholder="Tags (comma separated)"
         />
       </div>
 

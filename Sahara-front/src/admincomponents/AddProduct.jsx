@@ -21,6 +21,9 @@ const AddProduct = ({ onAddProduct }) => {
     price: "",
     quantity: "",
     imageUrl: "",
+    color: "",
+    category: "",
+    tags: [],
   });
 
   // State to manage alert visibility and messages
@@ -56,7 +59,10 @@ const AddProduct = ({ onAddProduct }) => {
       !formData.name ||
       !formData.price ||
       !formData.quantity ||
-      !formData.imageUrl
+      !formData.imageUrl ||
+      !formData.color ||
+      !formData.category ||
+      !formData.tags.length === 0
     ) {
       setAlertMessage("All fields are required.");
       setIsModalVisible(false);
@@ -95,6 +101,9 @@ const AddProduct = ({ onAddProduct }) => {
         price: "",
         quantity: "",
         imageUrl: "",
+        color: "",
+        category: "",
+        tags: [],
       });
       onAddProduct();
       setIsModalOpen(false);
