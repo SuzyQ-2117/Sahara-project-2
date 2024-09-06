@@ -11,7 +11,7 @@ const API_URL = 'http://localhost:8082/items/filter';
  * during the fetch operation. It also provides a way to manually refetch the data.
  *
  */
-const useFetchItems = () => {
+const useFetchItems = (sortOptions = { name: 'none', price: 'none' }, filters = {}, searchTerm = '') => {
     // State to store the fetched items
     const [items, setItems] = useState([]);
 
@@ -28,9 +28,20 @@ const useFetchItems = () => {
      */
     const fetchItems = useCallback(async () => {
         try {
+            // Build the request body dynamically from sort, filters, and searchTerm
             const requestBody = {
-                sort: ["name,none", "price,none"]
+                sort: [
+                    `name,${sortOptions.name}`,  // Sort by name (asc/desc/none)
+                    `price,${sortOptions.price}` // Sort by price (asc/desc/none)
+                ],
+                // Only include filters if they have values
+                ...(filters.minPrice ? { minPrice: filters.minPrice } : {}),
+                ...(filters.maxPrice ? { maxPrice: filters.maxPrice } : {}),
+                ...(filters.category && filters.category !== 'all' ? { category: filters.category } : {}),
+                ...(filters.inStock ? { inStock: filters.inStock } : {}),
+                ...(searchTerm ? { searchTerm: searchTerm } : {})
             };
+
             // Perform the GET request to fetch items
             const response = await axios.post(API_URL, requestBody);
 
@@ -44,7 +55,7 @@ const useFetchItems = () => {
             console.error('Error fetching items:', error);
             setError(error);
         }
-    }, []);
+    }, [sortOptions, filters, searchTerm]);
 
     /**
      * Effect hook to automatically fetch items when the component mounts.

@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../CSS/Navbar.css';
+import { ItemContext } from '../shopcomponents/ItemContext';
+
 
 /**
  * The Navbar component displays the navigation bar for the application.
@@ -12,6 +14,9 @@ import '../CSS/Navbar.css';
  * @returns {JSX.Element} The rendered Navbar component, including the site title and navigation links.
  */
 const Navbar = () => {
+
+    const { sortOptions, setSortOptions, filters, setFilters, searchTerm, setSearchTerm } = useContext(ItemContext);
+
     const [isOpen, setIsOpen] = useState(false);
 
     /**
@@ -32,20 +37,20 @@ const Navbar = () => {
         <nav className="navbar">
             <div className="navbar-content">
                 <h1 className="site-title">Sahara Stationery</h1>
-                <button 
+                <button
                     className="menu-toggle"
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    
+
                 >
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span className="bar"></span>
                     <span>Menu</span>
                 </button>
-                <ul 
+                <ul
                     className={`nav ${isOpen ? 'active' : ''}`}
-                  
+
                 >
                     <li className="nav-item">
                         <Link to="/">Home</Link>
