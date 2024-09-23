@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useFetchItems from '../admincomponents/FetchItems';
 import AddProduct from '../admincomponents/AddProduct';
 import UpdateProduct from '../admincomponents/UpdateProduct';
@@ -38,6 +38,10 @@ const AdminPage = () => {
         }
         setSortConfig({ key, direction });
     };
+
+    useEffect(() => {
+        refetch();
+    }, []);
 
     // If there's an error fetching products, display an error message
     if (error) return <div>Error loading products: {error.message}</div>;
