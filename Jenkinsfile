@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/SuzyQ-2117/Sahara-project-2.git'
+                // Checkout code from the configured SCM
+                checkout scm
             }
         }
 
@@ -19,7 +20,7 @@ pipeline {
         stage('Run Backend - Sahara-back') {
             steps {
                 dir('Sahara-back') {
-                    bat 'start mvn spring-boot:run'
+                    bat 'start /B mvn spring-boot:run'
                 }
             }
         }
@@ -35,7 +36,7 @@ pipeline {
         stage('Run Backend - Sahara-cart') {
             steps {
                 dir('Sahara-cart') {
-                    bat 'start mvn spring-boot:run'
+                    bat 'start /B mvn spring-boot:run'
                 }
             }
         }
@@ -51,7 +52,7 @@ pipeline {
         stage('Run Frontend') {
             steps {
                 dir('Sahara-front') {
-                    bat 'start npm start'
+                    bat 'start /B npm start'
                 }
             }
         }
