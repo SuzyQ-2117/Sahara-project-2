@@ -19,7 +19,7 @@ const CartPage = () => {
     const [itemMap, setItemMap] = useState({});
 
     useEffect(() => {
-        const map = items.reduce((acc, item) => {
+        const map = cartItems.reduce((acc, item) => {
             acc[item.id] = item.quantity;
             return acc;
         }, {});

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8082/items/getAll';
+const API_URL = 'http://localhost:8082/items/filter';
 
 /**
  * Custom React hook to fetch a list of items from an API.
@@ -11,7 +11,7 @@ const API_URL = 'http://localhost:8082/items/getAll';
  * during the fetch operation. It also provides a way to manually refetch the data.
  *
  */
-const useFetchItems = () => {
+const useFetchItems = (sortOptions = { name: 'none', price: 'none' }, filters = {}, searchTerm = '') => {
     // State to store the fetched items
     const [items, setItems] = useState([]);
 
@@ -28,8 +28,22 @@ const useFetchItems = () => {
      */
     const fetchItems = useCallback(async () => {
         try {
+            // Build the request body dynamically from sort, filters, and searchTerm
+            const requestBody = {
+                sort: [
+                    `name,${sortOptions.name}`,  // Sort by name (asc/desc/none)
+                    `price,${sortOptions.price}` // Sort by price (asc/desc/none)
+                ],
+                // Only include filters if they have values
+                ...(filters.minPrice ? { minPrice: filters.minPrice } : {}),
+                ...(filters.maxPrice ? { maxPrice: filters.maxPrice } : {}),
+                ...(filters.category && filters.category !== 'all' ? { category: filters.category } : {}),
+                ...(filters.inStock ? { inStock: filters.inStock } : {}),
+                ...(searchTerm ? { searchTerm: searchTerm } : {})
+            };
+
             // Perform the GET request to fetch items
-            const response = await axios.get(API_URL);
+            const response = await axios.post(API_URL, requestBody);
 
             // Log the fetched data to the console for debugging purposes
             console.log('Data fetched from API:', response.data);
@@ -41,7 +55,7 @@ const useFetchItems = () => {
             console.error('Error fetching items:', error);
             setError(error);
         }
-    }, []);
+    });
 
     /**
      * Effect hook to automatically fetch items when the component mounts.
@@ -50,9 +64,7 @@ const useFetchItems = () => {
      * or whenever the `fetchItems` function changes (which should be rare
      * due to `useCallback` memoization).
      */
-    useEffect(() => {
-        fetchItems();
-    }, [fetchItems]);
+    
 
     // Return the fetched items, any error that occurred, and the refetch function
     return { items, error, refetch: fetchItems };

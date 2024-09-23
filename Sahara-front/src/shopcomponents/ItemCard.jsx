@@ -29,9 +29,11 @@ const ItemCard = ({ id, name, price, imageUrl, quantity }) => {
             setAlertMessage(`Cannot add more than ${quantity} items to the cart.`);
             setShowAlert(true);
         } else {
-            addToCart({ id, name, price, imageUrl, quantity: inputQuantity });
+            addToCart({ id, name, price, imageUrl, quantity: totalQuantity });
             setShowPopup(true);
+            
         }
+        setInputQuantity(0);
     };
 
     const closeAlert = () => {

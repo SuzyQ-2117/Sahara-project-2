@@ -9,7 +9,12 @@ import '../CSS/CartItemRow.css';
  * This component renders a table row (`<tr>`) with several cells (`<td>`),
  * each containing different pieces of information or controls related to the item.
  */
-const CartItemRow = ({ item, itemMap, handleQuantityChange, handleRemoveItem }) => (
+const CartItemRow = ({ item, itemMap, handleQuantityChange, handleRemoveItem }) => {
+    
+    console.log("Item Map for item:", item.id, itemMap[item.id]);
+    console.log("Item Quantity for item:", item.id, item.quantity);
+
+    return(
     <tr>
         <td>{item.name}</td>
         <td>£{item.price.toFixed(2)}</td>
@@ -28,6 +33,8 @@ const CartItemRow = ({ item, itemMap, handleQuantityChange, handleRemoveItem }) 
             <button onClick={() => handleRemoveItem(item.id)}>Remove</button>
         </td>
     </tr>
+
 );
+}
 
 export default CartItemRow;

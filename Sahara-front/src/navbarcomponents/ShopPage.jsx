@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useFetchItems from '../admincomponents/FetchItems';
 import ItemList from '../shopcomponents/ItemList';
 import '../CSS/ShopPage.css';
+import FilterSearchSortBar from '../shopcomponents/FilterSearchSortBar';
+import { ItemContext } from '../shopcomponents/ItemContext';
 
 /**
  * The ShopPage component displays a list of items available for purchase.
@@ -10,12 +12,16 @@ import '../CSS/ShopPage.css';
  * 
  */
 const ShopPage = () => {
-  const { items, error } = useFetchItems();
+  const { sortOptions, filters, searchTerm } = useContext(ItemContext);;
+    const { items, error, refetch } = useFetchItems(sortOptions, filters, searchTerm);
 
   if (error) return <div>Error loading items: {error.message}</div>;
 
   return (
     <div className="body">
+      <FilterSearchSortBar
+                fetchItems={refetch}  // Pass the refetch function to fetch updated items
+            />
       {Array.isArray(items) && <ItemList items={items} />}
     </div>
   );

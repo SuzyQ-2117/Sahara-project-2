@@ -9,6 +9,75 @@ body {
 }
 
 
+.filter-search-sort-bar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 150px;
+}
+
+.top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.sort-button, .filter-button {
+  cursor: pointer;
+  padding: 10px;
+  background-color: #f0c040;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.sort-controls, .filter-controls {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 15px;
+  background-color: #f8f8f8;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  margin-top: 10px;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.hidden {
+  max-height: 0;
+  overflow: hidden;
+}
+
+.sort-controls {
+  max-height: 200px;
+}
+
+.filter-controls {
+  max-height: 300px;
+}
+
+.close {
+  align-self: flex-end;
+  cursor: pointer;
+  color: #f0c040;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .item-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
