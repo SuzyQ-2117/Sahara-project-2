@@ -26,7 +26,7 @@ pipeline {
             steps {
                 dir('Sahara-back') {
                     withEnv(['DB_URL=${BACK_DB_URL}', 'DB_USERNAME=${BACK_DB_USERNAME}', 'DB_PASSWORD=${BACK_DB_PASSWORD}']) {
-                        bat 'start mvn spring-boot:run'
+                        bat 'start /b mvn spring-boot:run'
                     }
                 }
             }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 dir('Sahara-cart') {
                     withEnv(['DB_URL=${CART_DB_URL}', 'DB_USERNAME=${CART_DB_USERNAME}', 'DB_PASSWORD=${CART_DB_PASSWORD}']) {
-                        bat 'start mvn spring-boot:run'
+                        bat 'start /b mvn spring-boot:run'
                     }
                 }
             }
@@ -65,7 +65,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('Sahara-front') {
-                    bat 'npm install'
+                    bat 'npm ci'
                 }
             }
         }
