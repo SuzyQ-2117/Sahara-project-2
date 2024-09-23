@@ -4,7 +4,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-            
                 git 'https://github.com/SuzyQ-2117/Sahara-project-2.git'
             }
         }
@@ -12,8 +11,7 @@ pipeline {
         stage('Build Backend - Sahara-back') {
             steps {
                 dir('Sahara-back') {
-                   
-                    sh 'mvn clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -21,8 +19,7 @@ pipeline {
         stage('Run Backend - Sahara-back') {
             steps {
                 dir('Sahara-back') {
-                   
-                    sh 'mvn spring-boot:run &'
+                    bat 'start mvn spring-boot:run'
                 }
             }
         }
@@ -30,8 +27,7 @@ pipeline {
         stage('Build Backend - Sahara-cart') {
             steps {
                 dir('Sahara-cart') {
-                 
-                    sh 'mvn clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -39,8 +35,7 @@ pipeline {
         stage('Run Backend - Sahara-cart') {
             steps {
                 dir('Sahara-cart') {
-                  
-                    sh 'mvn spring-boot:run &'
+                    bat 'start mvn spring-boot:run'
                 }
             }
         }
@@ -48,8 +43,7 @@ pipeline {
         stage('Build Frontend') {
             steps {
                 dir('Sahara-front') {
-                   
-                    sh 'npm install'
+                    bat 'npm install'
                 }
             }
         }
@@ -57,8 +51,7 @@ pipeline {
         stage('Run Frontend') {
             steps {
                 dir('Sahara-front') {
-                    
-                    sh 'npm start &'
+                    bat 'start npm start'
                 }
             }
         }
@@ -66,17 +59,14 @@ pipeline {
 
     post {
         always {
-        
             echo 'Pipeline execution complete'
         }
 
         success {
-          
             echo 'Build and deployment successful!'
         }
 
         failure {
-           
             echo 'Build or deployment failed.'
         }
     }
