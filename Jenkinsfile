@@ -55,6 +55,14 @@ pipeline {
             }
         }
 
+ stage('Test Backend - Sahara-cart') {
+            steps {
+                dir('Sahara-cart') {
+                    bat 'mvn test'
+                }
+            }
+        }
+
         stage('Run Backend - Sahara-cart') {
             environment {
                 CART_DB_URL = credentials('cart_url')
