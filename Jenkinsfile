@@ -17,6 +17,14 @@ pipeline {
             }
         }
 
+        stage('Test Backend - Sahara-back') {
+            steps {
+                dir('Sahara-back') {
+                    bat 'mvn test'
+                }
+            }
+        }
+
         stage('Run Backend - Sahara-back') {
             environment {
                 BACK_DB_URL = credentials('back_url')
