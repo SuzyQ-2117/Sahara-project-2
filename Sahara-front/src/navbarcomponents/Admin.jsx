@@ -17,6 +17,7 @@ import '../CSS/Modal.css';
  * 
  * This component manages internal state for product updates, deletions,
  * and sorting configurations. It also handles error states during product fetches..
+ * and sorting configurations. It also handles error states during product fetches....
  * 
  */
 const AdminPage = () => {
