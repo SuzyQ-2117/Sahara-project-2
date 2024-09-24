@@ -10,7 +10,7 @@ import '../CSS/Modal.css';
 /**
  * The AdminPage component provides an interface for managing products. 
  * It includes functionalities for adding, updating, and deleting products,
- * and displays a list of products in a table format..
+ * and displays a list of products in a table format....
  * 
  * It uses custom hooks and components to fetch products, handle updates,
  * and manage modals for deleting and updating products.
