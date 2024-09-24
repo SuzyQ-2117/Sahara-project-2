@@ -7,7 +7,7 @@ import jakarta.persistence.Embeddable;
  * This class is used to encapsulate the details of an item such as its identifier, name, price, and quantity.
  *
  * It is marked as {@code @Embeddable} to allow its usage as a component within other entity classes
- * in a JPA (Jakarta Persistence API) context..
+ * in a JPA (Jakarta Persistence API) context.
  */
 @Embeddable
 public class CartItemData {
